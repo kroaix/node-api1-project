@@ -25,7 +25,7 @@ server.get("/api/users", (req, res) => {
 })
 
 server.get("/api/users/:id", (req, res) => {
-  const id = req.params.id;
+  const {id} = req.params;
   db.findById(id)
   .then(user => {
     if(user){
@@ -67,3 +67,25 @@ server.post("/api/users", (req, res) => {
       });
   }
 });
+
+server.delete("/api/users/:id", (req, res) => {
+  const {id} = req.params;
+
+  db.remove(id)
+  .then(deleted => {
+    if(deleted){
+      res.status(204).end();
+    } else {
+      res
+        .status(404)
+        .json({
+          success: false,
+          message: "The user with the specified ID does not exist."
+        });
+    }
+  })
+  .catch(() => {
+    res.status(500).json({ error: "The user could not be removed" });
+  })
+})
+
