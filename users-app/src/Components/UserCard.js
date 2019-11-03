@@ -17,6 +17,7 @@ import { deleteUser, updateUser } from '../actions';
 const UserCard = ({ user, deleteUser, updateUser }) => {
   const [updatedUser, setUpdatedUser] = useState(user);
   const [isEditing, setIsEditing] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const deleteHandler = event => {
     event.preventDefault();
@@ -44,25 +45,31 @@ const UserCard = ({ user, deleteUser, updateUser }) => {
   return (
     <>
       <Card raised>
-        <Modal
-          trigger={
-            <Label corner='right' color='red'>
-              <Icon name='delete' />
-            </Label>
-          }
-          size='small'
-          closeIcon>
-          <Header icon='delete' content='Delete User' />
-          <Modal.Content>
-            <p>{`Do you want to delete the user ${user.name}?`}</p>
-          </Modal.Content>
-          <Modal.Actions>
-            <Button color='green' onClick={deleteHandler} inverted>
-              <Icon name='checkmark' />
-              Yes
-            </Button>
-          </Modal.Actions>
-        </Modal>
+        {isOpen ? (
+          <Modal open={isOpen} size='small'>
+            <Header icon='delete' content='Delete User' />
+            <Modal.Content>
+              <p>{`Do you want to delete the user ${user.name}?`}</p>
+            </Modal.Content>
+            <Modal.Actions>
+              <Button
+                id='no'
+                color='red'
+                onClick={() => setIsOpen(false)}
+                inverted>
+                <Icon name='delete' />
+                No
+              </Button>
+              <Button id='yes' color='green' onClick={deleteHandler} inverted>
+                <Icon name='checkmark' />
+                Yes
+              </Button>
+            </Modal.Actions>
+          </Modal>
+        ) : null}
+        <Label corner='right' color='red' onClick={() => setIsOpen(true)}>
+          <Icon name='delete' />
+        </Label>
         <Image
           src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
           wrapped
@@ -82,34 +89,40 @@ const UserCard = ({ user, deleteUser, updateUser }) => {
           </Card.Content>
         ) : (
           <Card.Content>
-            <Form onSubmit={handleSubmit}>
-              <Form.Field>
-                <label>User Name</label>
-                <Input
-                  type='text'
-                  name='name'
-                  value={updatedUser.name}
-                  onChange={handleChange}
-                  placeholder='User Name'
-                />
-              </Form.Field>
-              <Form.Field>
-                <label>User Bio</label>
-                <TextArea
-                  type='text'
-                  name='bio'
-                  value={updatedUser.bio}
-                  onChange={handleChange}
-                  placeholder='User Bio'
-                />
-              </Form.Field>
-              <Modal.Actions>
-                <Button positive>
-                  <Icon name='check' />
-                  Update User
-                </Button>
-              </Modal.Actions>
-            </Form>
+            <Label as='a' color='red' ribbon onClick={toggleIsEditing}>
+              Cancel&nbsp;&nbsp;&nbsp;&nbsp;
+              <Icon name='cancel' />
+            </Label>
+            <span>
+              <Form onSubmit={handleSubmit}>
+                <Form.Field>
+                  <label>User Name</label>
+                  <Input
+                    type='text'
+                    name='name'
+                    value={updatedUser.name}
+                    onChange={handleChange}
+                    placeholder='User Name'
+                  />
+                </Form.Field>
+                <Form.Field>
+                  <label>User Bio</label>
+                  <TextArea
+                    type='text'
+                    name='bio'
+                    value={updatedUser.bio}
+                    onChange={handleChange}
+                    placeholder='User Bio'
+                  />
+                </Form.Field>
+                <Modal.Actions>
+                  <Button positive>
+                    <Icon name='check' />
+                    Update User
+                  </Button>
+                </Modal.Actions>
+              </Form>
+            </span>
           </Card.Content>
         )}
       </Card>

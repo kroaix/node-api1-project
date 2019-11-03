@@ -29,6 +29,16 @@ div.ui.cards {
 div.ui.card {
   margin: 0px 17.5px !important;
 }
-a.ui.yellow.ribbon.label {
-  margin: 5px 0;
+.ribbon.label {
+  margin: 10px 0 !important;
+}
+#no,
+#yes {
+  width: 49.25%;
+}
+#no {
+  margin-right: 5px !important;
+}
+#yes {
+  margin-left: 5px !important;
 }
