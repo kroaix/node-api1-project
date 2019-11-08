@@ -1,0 +1,44 @@
+header {
+  height: 80px;
+  background: #333;
+  margin-bottom: 30px;
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+h1 {
+  color: #fff;
+}
+.form-add {
+  width: 30%;
+  display: flex !important;
+  flex-direction: column;
+  margin: 0 auto;
+}
+button {
+  margin: 0 !important;
+  width: 100%;
+}
+div.ui.cards {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: stretch !important;
+  margin: 20px auto !important;
+  width: 1300px;
+}
+div.ui.card {
+  margin: 0px 17.5px !important;
+}
+.ribbon.label {
+  margin: 10px 0 !important;
+}
+#no,
+#yes {
+  width: 49.25%;
+}
+#no {
+  margin-right: 5px !important;
+}
+#yes {
+  margin-left: 5px !important;
+}
